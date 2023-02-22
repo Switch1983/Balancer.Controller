@@ -5,14 +5,14 @@ const web3 = new Web3(ganache.provider());
  
 const { abi, evm } = require('../compile');
 
-let bondingCurveController;
+let reserveRatioController;
 let accounts;
 
 const testRatio = 25;
 
 beforeEach(async () => {
     accounts = await web3.eth.getAccounts();
-    bondingCurveController = await new web3.eth.Contract(abi)
+    reserveRatioController = await new web3.eth.Contract(abi)
     .deploy({
       data: evm.bytecode.object,
       arguments: [1]
@@ -22,15 +22,15 @@ beforeEach(async () => {
 
 describe('Bonding Curve Controller Contract', () => {
     it('deploys a contract', () => {
-        assert.ok(bondingCurveController.options.address);
+        assert.ok(reserveRatioController.options.address);
     })
 
     it('set ratio for a managed pool', async () => {
-        await bondingCurveController.methods.setReserveRatio(accounts[0], testRatio).send({
+        await reserveRatioController.methods.setReserveRatio(accounts[0], testRatio).send({
             from: accounts[0]
         });
 
-        const ratio = await bondingCurveController.methods.getManagedPoolRatio(accounts[0]).call({
+        const ratio = await reserveRatioController.methods.getManagedPoolRatio(accounts[0]).call({
             from: accounts[0]
         });
 
@@ -38,7 +38,7 @@ describe('Bonding Curve Controller Contract', () => {
     });
 
     it('runs a check that transfers 1 token', async () => {
-        const amountTransferred = await bondingCurveController.methods.runCheck(accounts[0]).call({
+        const amountTransferred = await reserveRatioController.methods.runCheck(accounts[0]).call({
             from: accounts[0]
         });
 
@@ -47,7 +47,7 @@ describe('Bonding Curve Controller Contract', () => {
 
     it('only manager can set a reserve ratio', async () => {
         try {
-            await bondingCurveController.methods.setReserveRatio(accounts[1], testRatio).send({
+            await reserveRatioController.methods.setReserveRatio(accounts[1], testRatio).send({
                 from: accounts[1],
             });
             assert(false);
@@ -57,11 +57,11 @@ describe('Bonding Curve Controller Contract', () => {
     });
 
     it('transfers management', async () => {
-            await bondingCurveController.methods.transferManagement(accounts[1]).send({
+            await reserveRatioController.methods.transferManagement(accounts[1]).send({
                 from: accounts[0]
             });
             
-            const manager = await bondingCurveController.methods.manager().call({
+            const manager = await reserveRatioController.methods.manager().call({
                 from: accounts[1]
             });
     

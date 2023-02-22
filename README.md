@@ -20,6 +20,8 @@ Active development occurs in this repository, which means some contracts in it m
 
 - [`Base.sol`](./contracts/base): An abstract base smart contract that forms the basis of all controllers. The base controller holds standard functions that any controller would expect.
 
+- [`ReserveRatioController.sol`](./contracts): An implementation of a controller that uses a reserve ratio to add and remove liquidity to the managed pool
+
 - [`BondingCurveController.sol`](./contracts): An implementation of a controller that uses a bonding curve to add and remove liquidity based on a curve formula.
 
 ## Build and Test
