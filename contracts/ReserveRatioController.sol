@@ -9,7 +9,7 @@ contract ReserveRatioController is BaseController {
     // Minimum reserve ratio
     uint defaultMinRatio;
     
-    constructor(uint _defaultMinRatio) BaseController()
+    constructor(uint _defaultMinRatio, address _vaultAddress) BaseController(_vaultAddress)
     {
         defaultMinRatio = _defaultMinRatio;
     }
@@ -19,7 +19,7 @@ contract ReserveRatioController is BaseController {
 
 
     // Checks if the ratio is breached and transfers as necessary
-    function runCheck(address _poolToCheck) public view restricted returns(uint)
+    function runCheck(bytes32 _poolId) public view restricted returns(uint)
     {
         // Retrieve balance for pool
         // Get bpt balance from vault

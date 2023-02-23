@@ -15,7 +15,7 @@ beforeEach(async () => {
     bondingCurveController = await new web3.eth.Contract(abi)
     .deploy({
       data: evm.bytecode.object,
-      arguments: [1]
+      arguments: ['0x95A621509071026ae5e40869698D72c74436176a']
     })
     .send({ from: accounts[0], gas: '2000000' });
 })
