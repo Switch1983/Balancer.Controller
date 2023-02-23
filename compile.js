@@ -8,6 +8,9 @@ const baseSource = fs.readFileSync(basePath, 'utf8');
 const reserveRatioControllerPath = path.resolve(__dirname, 'contracts', 'ReserveRatioController.sol');
 const reserveRatioControllerSource = fs.readFileSync(reserveRatioControllerPath, 'utf8');
 
+const bondingCurveControllerPath = path.resolve(__dirname, 'contracts', 'BondingCurveController.sol');
+const bondingCurveControllerSource = fs.readFileSync(bondingCurveControllerPath, 'utf8');
+
 const input = {
   language: 'Solidity',
   sources: {
@@ -16,6 +19,9 @@ const input = {
     },
     'ReserveRatioController.sol': {
       content: reserveRatioControllerSource,
+    },
+    'BondingCurveController.sol': {
+      content: bondingCurveControllerSource,
     }
   },
   settings: {
@@ -28,5 +34,5 @@ const input = {
 };
  
 module.exports = JSON.parse(solc.compile(JSON.stringify(input))).contracts[
-  'BaseController.sol', 'ReserveRatioController.sol'
-].ReserveRatioController;
+  'BaseController.sol', 'ReserveRatioController.sol', 'BondingCurveController.sol'
+].BondingCurveController;

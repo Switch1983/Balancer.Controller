@@ -6,7 +6,7 @@ import "./base/BaseController.sol";
 
 contract BondingCurveController is BaseController {
 
-    constructor(uint _defaultMinRatio) BaseController(_defaultMinRatio) {}
+    constructor(uint _defaultMinRatio) BaseController() {}
 
     // As liquidity is added/removed, pool tokens are minted/burned and a price calculated for the pool tokens
     // according to the bonding curve formula. 
