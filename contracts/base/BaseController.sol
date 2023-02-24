@@ -42,7 +42,7 @@ abstract contract BaseController is IController {
         managedPool.updateSwapFeeGradually(startTime, endTime, startSwapFeePercentage, endSwapFeePercentage);
     }
 
-    function updateSwapFeeGradually(
+    function updateWeightsGradually(
         address poolAddress,
         uint256 startTime,
         uint256 endTime,
@@ -126,6 +126,30 @@ abstract contract BaseController is IController {
         IManagedPool managedPool;
         managedPool = IManagedPool(poolAddress);
         managedPool.setCircuitBreakers(tokens, bptPrices, lowerBoundPercentages, upperBoundPercentages);
+    }
+
+    function addToken(
+        address poolAddress,
+        IERC20 tokenToAdd,
+        address assetManager,
+        uint256 tokenToAddNormalizedWeight,
+        uint256 mintAmount,
+        address recipient) public restricted {
+
+        IManagedPool managedPool;
+        managedPool = IManagedPool(poolAddress);
+        managedPool.addToken(tokenToAdd, assetManager, tokenToAddNormalizedWeight, mintAmount, recipient);
+    }
+
+    function removeToken(
+        address poolAddress,
+        IERC20 tokenToRemove,
+        uint256 burnAmount,
+        address sender) public restricted {
+
+        IManagedPool managedPool;
+        managedPool = IManagedPool(poolAddress);
+        managedPool.removeToken(tokenToRemove, burnAmount, sender);
     }
 
     /**
