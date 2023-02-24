@@ -1,13 +1,4 @@
 {
-  "name": "balancer.controller",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@balancer-labs/v2-deployments": "^3.1.1",
     "@balancer-labs/v2-interfaces": "^0.3.0",
@@ -16,10 +7,6 @@
     "@balancer-labs/v2-solidity-utils": "^3.0.2",
     "@balancer-labs/v2-vault": "^3.0.1",
     "@openzeppelin/contracts": "^4.8.1",
-    "@truffle/hdwallet-provider": "^2.1.6",
-    "ganache-cli": "^6.12.2",
-    "mocha": "^10.2.0",
-    "solc": "^0.8.18",
-    "web3": "^1.8.2"
+    "@truffle/hdwallet-provider": "^2.1.7"
   }
 }

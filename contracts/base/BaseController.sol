@@ -2,8 +2,10 @@
 
 pragma solidity ^0.8.17;
 
+pragma experimental ABIEncoderV2;
+
 import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
-import "@balancer-labs/v2-interfaces/contracts/pool-utils/IManagedPool.sol";
+ import "@balancer-labs/v2-interfaces/contracts/pool-utils/IManagedPool.sol";
 
 interface IController {
    function runCheck(bytes32 _poolId) external view returns(uint);

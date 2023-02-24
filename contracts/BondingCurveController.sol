@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.17;
 
+pragma experimental ABIEncoderV2;
+
 import "./base/BaseController.sol";
 
 contract BondingCurveController is BaseController {
@@ -14,8 +16,8 @@ contract BondingCurveController is BaseController {
     {
         // Get Pool tokens
         // (tokens, balances, lastChangeBlock) = vault.getPoolTokens(poolId);
-//        (IERC20[] memory tokens, , ) = vault.getPoolTokens(_poolId);
-//        IAsset[] memory assets = _convertERC20sToAssets(tokens);
+        (IERC20[] memory tokens, , ) = vault.getPoolTokens(_poolId);
+        IAsset[] memory assets = _convertERC20sToAssets(tokens);
 
         // Returns a collection of tokens and their amounts
         // tokens:  [0xba100000625a3754423978a60c9317c58a424e3D,
