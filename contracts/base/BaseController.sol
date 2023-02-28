@@ -5,7 +5,8 @@ pragma solidity ^0.8.17;
 pragma experimental ABIEncoderV2;
 
 import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
- import "@balancer-labs/v2-interfaces/contracts/pool-utils/IManagedPool.sol";
+import "@balancer-labs/v2-interfaces/contracts/pool-utils/IManagedPool.sol";
+import "../ManagedPoolFactory.sol";
 
 interface IController {
    function runCheck(bytes32 _poolId) external view returns(uint);
@@ -14,15 +15,40 @@ interface IController {
 abstract contract BaseController is IController {
     address public manager;
     IVault internal immutable vault;
+    ManagedPoolFactory internal immutable managedPoolFactory;
 
     mapping(address => bool) public managedPools; // Pools and their managers
 
-    constructor(address _vaultAddress) {
+    constructor(address _vaultAddress, address _managedPoolFactory) {
         manager = msg.sender;
         vault = IVault(_vaultAddress);
+        managedPoolFactory = ManagedPoolFactory(_managedPoolFactory);
     }
     
-    function registerPool(address _poolAddress) public restricted {
+    function createPool(string memory _name,
+                        string memory _symbol,
+                        address[] memory _tokens,
+                        uint256[] memory _normalizedWeights,
+                        address[] memory _assetManagers,
+                        uint256 _swapFeePercentage,
+                        bool _swapEnabledOnStart,
+                        bool _mustAllowlistLPs,
+                        uint256 _managementAumFeePercentage,
+                        uint256 _aumFeeId) public restricted {
+
+        ManagedPoolSettings.NewPoolParams memory poolParams;
+        poolParams.name = _name;
+        poolParams.symbol = _symbol;
+        poolParams.tokens = _tokens;
+        poolParams.normalizedWeights = _normalizedWeights;
+        poolParams.assetManagers = _assetManagers;
+        poolParams.swapFeePercentage = _swapFeePercentage;
+        poolParams.swapEnabledOnStart = _swapEnabledOnStart;
+        poolParams.mustAllowlistLPs = _mustAllowlistLPs;
+        poolParams.managementAumFeePercentage = _managementAumFeePercentage;
+        poolParams.aumFeeId = _aumFeeId;
+
+        address _poolAddress = managedPoolFactory.create(poolParams, address(this));
         managedPools[_poolAddress] = true;
     }
 

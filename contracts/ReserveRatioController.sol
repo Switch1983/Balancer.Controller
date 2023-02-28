@@ -9,7 +9,7 @@ contract ReserveRatioController is BaseController {
     // Minimum reserve ratio
     uint defaultMinRatio;
     
-    constructor(uint _defaultMinRatio, address _vaultAddress) BaseController(_vaultAddress)
+    constructor(uint _defaultMinRatio, address _vaultAddress, address _managedPoolFactory) BaseController(_vaultAddress, _managedPoolFactory)
     {
         defaultMinRatio = _defaultMinRatio;
     }
@@ -25,7 +25,7 @@ contract ReserveRatioController is BaseController {
         // Get bpt balance from vault
         // Calculate reserve requirement as deposits * rr
         // If this is higher than reserve, transfer difference
-        return 1;
+        return _poolId.length;
     }
 
     function setReserveRatio(address _poolAddress, uint _ratio) public restricted {

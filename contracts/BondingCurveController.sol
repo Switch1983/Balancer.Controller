@@ -8,7 +8,7 @@ import "./base/BaseController.sol";
 
 contract BondingCurveController is BaseController {
 
-    constructor(address _vaultAddress) BaseController(_vaultAddress) {}
+    constructor(address _vaultAddress, address _managedPoolFactory) BaseController(_vaultAddress, _managedPoolFactory) {}
 
     // As liquidity is added/removed, pool tokens are minted/burned and a price calculated for the pool tokens
     // according to the bonding curve formula. 
@@ -21,10 +21,10 @@ contract BondingCurveController is BaseController {
 
         // Returns a collection of tokens and their amounts
         // tokens:  [0xba100000625a3754423978a60c9317c58a424e3D,
-        //              0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2]
+        //           0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2]
         // 
         // balances:  [5720903090084350251216632,
-        //              7939247003721636150710]
+        //             7939247003721636150710]
 
         // Calculate the weighting here
         // https://docs.balancer.fi/reference/math/weighted-math.html#overview
@@ -36,6 +36,6 @@ contract BondingCurveController is BaseController {
         // pool.getOwner();
         // pool.getPausedState();
 
-        return 1;
+        return assets.length;
     }
 }
