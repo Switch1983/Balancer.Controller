@@ -42,6 +42,7 @@ contract('BondingCurveController', (accounts) => {
     assert.equal(managedPoolSet, true);
   });
 */
+
   it('transfers management', async () => {
     await bondingCurveController.transferManagement(accounts[1]);
     const manager = (await bondingCurveController.manager.call());
