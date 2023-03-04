@@ -178,6 +178,22 @@ abstract contract BaseController is IController {
         managedPool.removeToken(tokenToRemove, burnAmount, sender);
     }
 
+    function withdrawFunds(
+        address recipientAddress,
+        address tokenAddress,
+        uint256 amount) public restricted {
+
+        IERC20 _token = IERC20(tokenAddress);
+        _token.transferFrom(address(this), recipientAddress, amount);
+    }
+
+    function depositTokens(
+        uint amount,
+        address tokenAddress) public restricted checkAllowance(amount, tokenAddress) {
+        IERC20 token = IERC20(tokenAddress);
+        token.transferFrom(msg.sender, address(this), amount);
+    }
+
     /**
      * @dev This helper function is a fast and cheap way to convert between IERC20[] and IAsset[] types
      */
@@ -190,6 +206,13 @@ abstract contract BaseController is IController {
 
     modifier restricted() {
         require(msg.sender == manager);
+        _;
+    }
+
+    // Modifier to check token allowance
+    modifier checkAllowance(uint amount, address tokenAddress) {
+        IERC20 token = IERC20(tokenAddress);
+        require(token.allowance(msg.sender, address(this)) >= amount, "Error");
         _;
     }
 }

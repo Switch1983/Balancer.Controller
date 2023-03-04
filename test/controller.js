@@ -11,7 +11,7 @@ contract('BondingCurveController', (accounts) => {
     bondingCurveController = await BondingCurveController.deployed();
   })
 
-  /*
+  
   it('runs a check on adding one pool', async () => {
     await bondingCurveController.createPool("TestPool1",
     "TestPool1",
@@ -26,7 +26,8 @@ contract('BondingCurveController', (accounts) => {
     const managedPoolSet = (await bondingCurveController.managedPools.call(accounts[0]));
     assert.equal(managedPoolSet, true);
   });
-
+  
+/*
   it('runs a check on adding one pool', async () => {
     await bondingCurveController.createPool("TestPool1",
     "TestPool1",
