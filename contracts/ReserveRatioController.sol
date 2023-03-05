@@ -17,15 +17,14 @@ contract ReserveRatioController is BaseController {
     // Managed Pools
     mapping(address => uint) public reserveRatio; // MP Address and its Reserve Ratio
 
-
-    // Checks if the ratio is breached and transfers as necessary
-    function runCheck(bytes32 _poolId) public view restricted returns(uint)
+    /**
+     * @notice Runs a check and transfers reserve tokens as needed
+     * @dev To avoid too many fees, this should be run at wide intervals such as daily
+     */
+    function runCheck(address _poolAddress) public restricted
     {
-        // Retrieve balance for pool
-        // Get bpt balance from vault
-        // Calculate reserve requirement as deposits * rr
-        // If this is higher than reserve, transfer difference
-        return _poolId.length;
+        IManagedPool managedPool;
+        managedPool = IManagedPool(_poolAddress);
     }
 
     function setReserveRatio(address _poolAddress, uint _ratio) public restricted {
